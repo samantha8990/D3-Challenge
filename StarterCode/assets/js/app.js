@@ -36,11 +36,11 @@ d3.csv("data.csv").then(function(data) {
  // Step 2: Create scale functions
     // ==============================
     var xLinearScale = d3.scaleLinear()
-      .domain([20, d3.max(data, d => d.poverty*1.05)])
+      .domain([10, d3.max(data, d => d.poverty)])
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.healthcare*1.1)])
+      .domain([0, d3.max(data, d => d.healthcare)])
       .range([height, 0]);
 
     // Step 3: Create axis functions
@@ -67,6 +67,15 @@ d3.csv("data.csv").then(function(data) {
       .attr("r", "15")
       .attr("fill", "blue")
       .attr("opacity", ".5");
+
+      var textGroup = chartGroup.selectAll("stateText")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("x", d => xLinearScale(d.poverty +1.5)-12)
+      .attr("y", d => yLinearScale(d.healthcare+.3)+4)
+      .text(d => d.abbr)
+   
   
   
       //  Initialize tool tip
